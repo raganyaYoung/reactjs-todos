@@ -8,14 +8,14 @@ class ListBox extends React.Component {
 
     this.state = {
       todolists:[{
-        checked:true,
+        checked:false,
         text:'11'
       },{
         checked:false,
         text:'22'
       }],
       inputValue:'',
-      finishCount:1
+      finishCount:0
     };
   }
 
@@ -94,13 +94,19 @@ class ListBox extends React.Component {
   delAllFinish = () => {
     var that = this;
     var lists = that.state.todolists;
-    lists.forEach(function(msg,index){
-      if(msg.checked){
-        that.delCallback(index)
+    var count = null;
+    function unChecked(lists){
+      if(lists.checked){
+        return false
       }else{
-        return false;
+        return true
       }
-    })
+    }
+    var unFinishArr = lists.filter(unChecked);
+    this.setState({
+      todolists:unFinishArr,
+      finishCount:0
+    });
   };
 
   render() {
