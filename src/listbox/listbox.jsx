@@ -7,15 +7,10 @@ class ListBox extends React.Component {
     super(prop);
 
     this.state = {
-      todolists:[{
-        checked:false,
-        text:'11'
-      },{
-        checked:false,
-        text:'22'
-      }],
+      todolists:[],
       inputValue:'',
-      finishCount:0
+      finishCount:0,
+      allChecked:false
     };
   }
 
@@ -28,6 +23,7 @@ class ListBox extends React.Component {
     })
   };
 
+  //勾选单个完成后修改已完成数 ， 传递给子组件SubList
   checkCallBack = index => {
     var arr = this.state.todolists;
     arr[index].checked = !arr[index].checked;
@@ -94,7 +90,6 @@ class ListBox extends React.Component {
   delAllFinish = () => {
     var that = this;
     var lists = that.state.todolists;
-    var count = null;
     function unChecked(lists){
       if(lists.checked){
         return false
@@ -105,9 +100,26 @@ class ListBox extends React.Component {
     var unFinishArr = lists.filter(unChecked);
     this.setState({
       todolists:unFinishArr,
-      finishCount:0
+      finishCount:0,
+      allChecked:false
     });
   };
+
+  //将所有task变成已完成
+  checkAllFinish = () => {
+    var lists = this.state.todolists;
+    var bool = !this.state.allChecked;
+    var count = 0;
+    lists.forEach(function(msg,index){
+      msg.checked = bool;
+    })
+    console.log('list',lists)
+    this.setState({
+      todolists:lists,
+      finishCount:bool?lists.length:0,
+      allChecked:bool
+    })
+  }
 
   render() {
     var _self = this;
@@ -133,7 +145,7 @@ class ListBox extends React.Component {
         <ul className="panel-body">
           {msgs}
           <li>
-            <input type="checkbox" name="goodCheck"/>
+            <input type="checkbox" name="goodCheck" onClick={this.checkAllFinish} checked={this.state.allChecked}/>
             <label>{this.state.finishCount}已完成/{this.state.todolists.length}总数</label>
             <button className="btn btn-xs btn-info pull-right delBtn" onClick={this.delAllFinish}>清除已完成</button>
           </li>
