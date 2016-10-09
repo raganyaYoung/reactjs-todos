@@ -1,0 +1,45 @@
+.splitHContainer {
+    height: 100%;
+    max-width:100%;
+    cursor: col-resize;
+/*
+    background-color: #1184CE;
+*/
+}
+
+.splitHPane {
+    float: left;
+    height: 100%;
+    cursor: default;
+
+/*    background-color: #01ff70; */
+}
+
+.splitHPane:first-child {
+    margin: 0px 0px;
+}
+
+.splitHPane:last-child {
+    margin: 0px 0px 0px 4px;
+}
+
+.splitVContainer {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    cursor: row-resize;
+}
+
+.splitVPane {
+    width: 100%;
+    background-color: #01ff70;
+    cursor: default;
+}
+
+.splitVPane:first-child {
+    margin: 0px 0px;
+}
+
+.splitVPane:last-child {
+    margin: 4px 0px 0px 0px;
+}
